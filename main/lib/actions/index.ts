@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from "axios";
 
-const API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyDiIIdedn3CkhZSF-uYEBKAcamx-jZKV0E'; // Use environment variables for security
+const API_KEY = process.env.GEMINI_API_KEY; // Use environment variables for security
 
 if (!API_KEY) {
   throw new Error("GEMINI_API_KEY environment variable is not set");

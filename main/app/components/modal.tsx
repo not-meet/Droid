@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = ({ title, description, buttonLabel, onButton
       {/* Button */}
 
       {/* Modal */}
-      <div className="w-[15rem] h-[10rem] bg-slate-300 shadow-lg rounded-lg p-4 flex flex-col justify-between border border-gray-300">
+      <div className="w-[17rem] h-[12rem] bg-slate-300 shadow-lg rounded-lg p-4 flex gap-5 flex-col justify-between border border-gray-300">
         {/* Title */}
         <h2 className="text-xl font-bold text-gray-800">{title}</h2>
 
