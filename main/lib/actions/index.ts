@@ -21,6 +21,24 @@ const generationConfig = {
 };
 
 /**
+ * Formats AI response text to improve readability (adds spaces, trims excessive whitespace).
+ * @param {string} text - The raw AI-generated text.
+ * @returns {string} - The formatted response text.
+ */
+const formatResponseText = (text: string): string => {
+  // Trim leading/trailing spaces and normalize multiple spaces to a single one
+  let formattedText = text.trim().replace(/\s+/g, " ");
+
+  // Replace common punctuation marks with proper spacing (if needed)
+  formattedText = formattedText.replace(/([.!?])/g, "$1 "); // Add space after punctuation
+
+  // Preserve paragraph breaks and multiple newlines if present
+  formattedText = formattedText.replace(/\n+/g, "\n\n");
+
+  return formattedText;
+};
+
+/**
  * Fetches AI response using the Google Generative AI SDK.
  * @param {string} input - The user input message to send to AI.
  * @returns {Promise<string>} - The AI-generated response as a string.
@@ -40,8 +58,11 @@ export const getAIResponse = async (input: string): Promise<string> => {
     // Send the input message to the AI
     const result = await chatSession.sendMessage(input);
 
-    // Extract and return the AI-generated response
-    return result.response.text() || "No response received.";
+    // Extract and format the AI-generated response
+    const rawResponse = result.response.text() || "No response received.";
+    const formattedResponse = formatResponseText(rawResponse); // Format the text
+
+    return formattedResponse;
   } catch (error) {
     console.error("Error fetching AI response:");
 

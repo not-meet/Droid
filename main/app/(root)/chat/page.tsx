@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -59,7 +58,7 @@ const ChatPage = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-4" // Increased space for better separation
           >
             <span className="text-blue-600 font-semibold">{index + 1}.</span>
             <span className="text-gray-800">{prompt}</span>
@@ -110,7 +109,11 @@ const ChatPage = () => {
         transition={{ duration: 0.5 }}
       >
         <h2 className="font-bold text-xl text-blue-600">AI Response:</h2>
-        <p className="text-gray-700">{isTyping ? "AI is typing..." : response || "The AI's response will appear here."}</p>
+        <p className="text-gray-700 whitespace-pre-line">
+          {isTyping
+            ? "AI is typing..."
+            : response || "The AI's response will appear here."}
+        </p>
       </motion.div>
 
       {/* Typing Indicator */}
