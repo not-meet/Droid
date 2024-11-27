@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -41,7 +42,18 @@ const ChatPage = () => {
   };
 
   const handlePromptClick = (prompt: string) => {
-    setInput(prevInput => prevInput + " " + prompt); // Append the selected prompt to the input
+    setInput((prevInput) => prevInput + " " + prompt); // Append the selected prompt to the input
+  };
+
+  // Function to format the AI response (add line breaks and bold formatting)
+  const formatResponse = (text: string) => {
+    // Replace **bold text** with <strong>
+    let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    // Split the text by newlines and join them with <br />
+    formattedText = formattedText.replace(/\n/g, "<br />");
+
+    return formattedText;
   };
 
   return (
@@ -109,11 +121,14 @@ const ChatPage = () => {
         transition={{ duration: 0.5 }}
       >
         <h2 className="font-bold text-xl text-blue-600">AI Response:</h2>
-        <p className="text-gray-700 whitespace-pre-line">
-          {isTyping
-            ? "AI is typing..."
-            : response || "The AI's response will appear here."}
-        </p>
+        <p
+          className="text-gray-700"
+          dangerouslySetInnerHTML={{
+            __html: formatResponse(
+              isTyping ? "AI is typing..." : response || "The AI's response will appear here."
+            ), // Apply the formatting function
+          }}
+        />
       </motion.div>
 
       {/* Typing Indicator */}
