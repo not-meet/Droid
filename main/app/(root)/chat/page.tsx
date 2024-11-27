@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -9,6 +10,16 @@ const ChatPage = () => {
   const [response, setResponse] = useState<string>(""); // AI response
   const [loading, setLoading] = useState<boolean>(false); // Loading state
   const [isTyping, setIsTyping] = useState<boolean>(false); // Typing indicator
+
+  // Predefined prompts
+  const prompts = [
+    "I need a roadmap for becoming a software developer.",
+    "I want platforms to learn web development.",
+    "How do I improve my problem-solving skills?",
+    "Can you suggest some career paths in technology?",
+    "What are the top skills for a data scientist?",
+    "How to create a standout resume for tech jobs?",
+  ];
 
   const handleSubmit = async () => {
     if (!input.trim()) {
@@ -30,11 +41,39 @@ const ChatPage = () => {
     }
   };
 
+  const handlePromptClick = (prompt: string) => {
+    setInput(prevInput => prevInput + " " + prompt); // Append the selected prompt to the input
+  };
+
   return (
     <div className="max-w-4xl mx-auto mt-10 p-4 space-y-6">
       <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
         AI Career Guidance Assistant
       </h1>
+
+      {/* Predefined Prompts as List with Numbered Indexes */}
+      <div className="space-y-4 mb-6">
+        {prompts.map((prompt, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="flex items-center space-x-2"
+          >
+            <span className="text-blue-600 font-semibold">{index + 1}.</span>
+            <span className="text-gray-800">{prompt}</span>
+            <motion.button
+              onClick={() => handlePromptClick(prompt)}
+              className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-all duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {index + 1}
+            </motion.button>
+          </motion.div>
+        ))}
+      </div>
 
       {/* Input Box with Instructions */}
       <div className="space-y-4">
@@ -54,9 +93,10 @@ const ChatPage = () => {
       {/* Submit Button with Loading State */}
       <motion.button
         onClick={handleSubmit}
-        className={`mt-4 px-6 py-3 rounded-lg text-white text-lg shadow-md transition-all duration-300 ease-in-out ${loading ? "bg-gray-500 cursor-wait" : "bg-blue-500 hover:bg-blue-600"
+        className={`mt-4 px-6 py-3 rounded-lg text-white text-lg shadow-md transition-all duration-300 ease-in-out ${loading ? "bg-gray-500 cursor-wait" : "bg-blue-600 hover:bg-blue-500"
           }`}
         disabled={loading}
+        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
         {loading ? "Fetching..." : "Submit"}
